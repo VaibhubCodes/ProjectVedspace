@@ -6,7 +6,6 @@ class CustomUser(AbstractUser):
     DEGREE_CHOICES = [
         ('BTECH', 'B.Tech'),
         ('BCA', 'BCA'),
-        ('BBA', 'BBA'),
         ('MCA', 'MCA'),
         ('MBA', 'MBA'),
         ('BSC', 'B.Sc.'),
