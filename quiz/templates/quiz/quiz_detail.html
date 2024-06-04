@@ -1,0 +1,10 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Quiz Detail{% endblock %}
+
+{% block content %}
+<h2>{{ quiz.title }}</h2>
+<p>{{ quiz.description }}</p>
+<p>Time: {{ quiz.timer }} seconds</p>
+<a href="{% url 'start_quiz' quiz.id %}">Start Quiz</a>
+{% endblock %}

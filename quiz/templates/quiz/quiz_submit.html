@@ -1,0 +1,9 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Submit Quiz{% endblock %}
+
+{% block content %}
+<h2>Submit Quiz</h2>
+<p>Your quiz has been submitted!</p>
+<a href="{% url 'leaderboard' user_quiz.quiz.id %}">View Leaderboard</a>
+{% endblock %}

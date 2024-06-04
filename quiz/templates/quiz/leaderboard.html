@@ -1,0 +1,29 @@
+<!-- quiz/templates/admin/quiz/userquiz/leaderboard.html -->
+
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+
+{% block content %}
+<h2>Leaderboard</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Score</th>
+            <th>Time (seconds)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user_quiz in user_quizzes %}
+        <tr>
+            <td>{{ user_quiz.rank }}</td>
+            <td>{{ user_quiz.user.phone_number }}</td>
+            <td>{{ user_quiz.score }}</td>
+            <td>{{ user_quiz.duration|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'admin:quiz_userquiz_changelist' %}">Back to User Quizzes</a>
+{% endblock %}

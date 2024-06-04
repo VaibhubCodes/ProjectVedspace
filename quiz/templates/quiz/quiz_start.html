@@ -1,0 +1,41 @@
+{% extends 'quiz/base.html' %}
+
+{% block title %}Start Quiz{% endblock %}
+
+{% block content %}
+<h2>{{ user_quiz.quiz.title }}</h2>
+<form id="quiz-form" method="post" action="{% url 'submit_quiz' user_quiz.id %}">
+    {% csrf_token %}
+    {% for question in user_quiz.quiz.questions.all %}
+    <fieldset>
+        <legend>{{ question.text }}</legend>
+        {% for option in question.options.all %}
+        <label>
+            <input type="radio" name="question_{{ question.id }}" value="{{ option.id }}">
+            {{ option.text }}
+        </label><br>
+        {% endfor %}
+    </fieldset>
+    {% endfor %}
+    <button type="submit">Submit Quiz</button>
+</form>
+
+<p id="timer">Time remaining: <span id="time">{{ remaining_time }}</span> seconds</p>
+
+<script>
+    // Countdown timer
+    var timeRemaining = {{ remaining_time }};
+    var timerElement = document.getElementById('time');
+    var formElement = document.getElementById('quiz-form');
+
+    var countdown = setInterval(function() {
+        if (timeRemaining <= 0) {
+            clearInterval(countdown);
+            formElement.submit();
+        } else {
+            timeRemaining -= 1;
+            timerElement.textContent = timeRemaining;
+        }
+    }, 1000);
+</script>
+{% endblock %}

@@ -12,7 +12,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email', 'password', 'is_active', 'is_admin')
+        fields = ('phone_number', 'email', 'password', 'is_active', 'is_superuser')
 
     def clean_password(self):
         return self.initial["password"]
@@ -23,7 +23,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = CustomUser
-        fields = ('email',)
+        fields = ('phone_number', 'email')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -44,72 +44,71 @@ class UserCreationForm(forms.ModelForm):
 class CustomUserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
-    list_display = ('email', 'is_admin', 'is_active')
-    list_filter = ('is_admin', 'is_active')
+    list_display = ('name','username','phone_number', 'email', 'is_superuser', 'is_active')
+    list_filter = ('is_superuser', 'is_active')
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal Info', {'fields': ('photo', 'bio', 'skills', 'education', 'college', 'age', 'gender', 'phone_number', 'instagram_profile', 'linkedin_profile', 'github_profile')}),
-        ('Permissions', {'fields': ('is_admin', 'is_active')}),
+        (None, {'fields': ('phone_number', 'email', 'password')}),
+        ('Personal Info', {'fields': ('name','photo', 'bio', 'skills', 'education', 'college', 'age', 'gender', 'instagram_profile', 'linkedin_profile', 'github_profile')}),
+        ('Permissions', {'fields': ('is_superuser', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'is_active', 'is_admin'),
+            'fields': ('name','phone_number', 'email', 'password1', 'password2', 'is_active', 'is_superuser'),
         }),
         ('Personal Info', {
             'classes': ('wide',),
-            'fields': ('photo', 'bio', 'skills', 'education', 'college', 'age', 'gender', 'phone_number', 'instagram_profile', 'linkedin_profile', 'github_profile'),
+            'fields': ('photo', 'bio', 'skills', 'education', 'college', 'age', 'gender', 'instagram_profile', 'linkedin_profile', 'github_profile',),
         }),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('phone_number', 'email')
+    ordering = ('phone_number',)
     filter_horizontal = ()
-
-# Repeat similar setups for CompanyUser and CollegeUser if they have unique fields or requirements
 
 class CompanyUserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     model = CompanyUser
-    list_display = ('email', 'company_name', 'is_active')
+    list_display = ('phone_number', 'email', 'company_name', 'is_active')
     list_filter = ('is_active',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('phone_number', 'email', 'password')}),
         ('Company Information', {'fields': ('company_name', 'website', 'description', 'employees', 'category', 'contact_number')}),
         ('Permissions', {'fields': ('is_active',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'company_name', 'website', 'description', 'employees', 'category', 'contact_number', 'is_active'),
+            'fields': ('phone_number', 'email', 'password1', 'password2', 'company_name', 'website', 'description', 'employees', 'category', 'contact_number', 'is_active'),
         }),
     )
-    search_fields = ('email', 'company_name')
-    ordering = ('email',)
+    search_fields = ('phone_number', 'email', 'company_name')
+    ordering = ('phone_number',)
     filter_horizontal = ()
 
 class CollegeUserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     model = CollegeUser
-    list_display = ('email', 'college_name', 'is_active')
+    list_display = ('phone_number', 'email', 'college_name', 'is_active')
     list_filter = ('is_active',)
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
+        (None, {'fields': ('phone_number', 'email', 'password')}),
         ('College Information', {'fields': ('college_name', 'courses', 'tnp_cell_contact', 'category', 'number_of_students', 'social_profile')}),
         ('Permissions', {'fields': ('is_active',)}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'college_name', 'courses', 'tnp_cell_contact', 'category', 'number_of_students', 'social_profile', 'is_active'),
+            'fields': ('phone_number', 'email', 'password1', 'password2', 'college_name', 'courses', 'tnp_cell_contact', 'category', 'number_of_students', 'social_profile', 'is_active'),
         }),
     )
-    search_fields = ('email', 'college_name')
-    ordering = ('email',)
+    search_fields = ('phone_number', 'email', 'college_name')
+    ordering = ('phone_number',)
     filter_horizontal = ()
 
 # Register models with their respective admins
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(CompanyUser, CompanyUserAdmin)
 admin.site.register(CollegeUser, CollegeUserAdmin)
+

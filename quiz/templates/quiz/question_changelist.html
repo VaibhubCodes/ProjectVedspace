@@ -1,0 +1,12 @@
+<!-- quiz/templates/admin/quiz/question_changelist.html -->
+
+{% extends "admin/change_list.html" %}
+
+{% block object-tools-items %}
+  <ul class="object-tools">
+    <li>
+      <a href="{% url 'admin:import_csv' %}" class="addlink">Import Questions from CSV</a>
+    </li>
+  </ul>
+  {{ block.super }}
+{% endblock %}
